@@ -16,7 +16,7 @@
   "dev": "concurrently \"npm run server\" \"npm run client\"",
   "start": "node server.js",
   "build": "cd client && npm install && npm run build"
-}
+},
 
 
   
