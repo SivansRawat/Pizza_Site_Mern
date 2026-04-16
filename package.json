@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
-  },
+  "node": "20.x"
+},
   "scripts": {
     "client-install": "npm install --prefix client",
     "server": "nodemon server.js",
