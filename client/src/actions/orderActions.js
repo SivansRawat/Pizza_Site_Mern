@@ -24,22 +24,52 @@ export const placeOrder=(token , subtotal)=>async (dispatch , getState)=>{
 }
 
 
-export const getUserOrders=()=>async (dispatch,getState)=>{
+// export const getUserOrders=()=>async (dispatch,getState)=>{
 
-  dispatch({type:'GET_USER_ORDERS_REQUEST'})
+//   dispatch({type:'GET_USER_ORDERS_REQUEST'})
   
+//   try {
+//       const response = await axios.post('/api/orders/getuserorders' , {userid : currentUser._id}, getAuthConfig(getState))
+
+      
+//       console.log(response);
+      
+//       dispatch({type:'GET_USER_ORDERS_SUCCESS' , payload : response.data})
+//   } catch (error) {
+//       dispatch({type:'GET_USER_ORDERS_FAILED' , payload : error})
+//   }
+
+// }
+
+
+
+export const getUserOrders = () => async (dispatch, getState) => {
+
+  dispatch({ type: 'GET_USER_ORDERS_REQUEST' });
+
+  const currentUser = getState().loginUserReducer.currentUser; // ✅ FIX
+
   try {
-      const response = await axios.post('/api/orders/getuserorders' , {userid : currentUser._id}, getAuthConfig(getState))
+    const response = await axios.post(
+      '/api/orders/getuserorders',
+      { userid: currentUser._id },
+      getAuthConfig(getState)
+    );
 
-      
-      console.log(response);
-      
-      dispatch({type:'GET_USER_ORDERS_SUCCESS' , payload : response.data})
+    console.log(response);
+
+    dispatch({
+      type: 'GET_USER_ORDERS_SUCCESS',
+      payload: response.data
+    });
+
   } catch (error) {
-      dispatch({type:'GET_USER_ORDERS_FAILED' , payload : error})
+    dispatch({
+      type: 'GET_USER_ORDERS_FAILED',
+      payload: error
+    });
   }
-
-}
+};
 
 export const getAllOrders=()=>async (dispatch,getState)=>{
 
