@@ -1,9 +1,8 @@
-import React , {useState, useEffect} from 'react'
+import React , {useEffect} from 'react'
 import {useDispatch , useSelector} from 'react-redux'
 import { getUserOrders } from '../actions/orderActions'
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import Success from '../components/Success'
 import AOS from 'aos'
 import 'aos/dist/aos.css';
 export default function Ordersscreen() {
@@ -17,7 +16,7 @@ export default function Ordersscreen() {
 
         dispatch(getUserOrders())
       
-    }, [])
+    }, [dispatch])
 
     return (
         <div>

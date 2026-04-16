@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getAuthConfig } from "../utils/authConfig";
+
 export const getAllPizzas=()=>async dispatch=>{
 
     dispatch({type:'GET_PIZZAS_REQUEST'})
@@ -38,9 +40,9 @@ export const filterPizzas=(searchkey , category)=>async dispatch=>{
         const response = await axios.get('/api/pizzas/getallpizzas')
         filteredPizzas = response.data.filter(pizza=>pizza.name.toLowerCase().includes(searchkey))
          
-        if(category!='all')
+        if(category !== 'all')
         {
-            filteredPizzas = response.data.filter(pizza=>pizza.category.toLowerCase()==category)
+            filteredPizzas = response.data.filter(pizza=>pizza.category.toLowerCase() === category)
 
         }
         dispatch({type:'GET_PIZZAS_SUCCESS' , payload : filteredPizzas})
@@ -50,10 +52,10 @@ export const filterPizzas=(searchkey , category)=>async dispatch=>{
 
 }
 
-export const addPizza=(pizza)=>async dispatch=>{
+export const addPizza=(pizza)=>async (dispatch, getState)=>{
     dispatch({type:'ADD_PIZZA_REQUEST'})
     try {
-        const response= await axios.post('/api/pizzas/addpizza' , {pizza})
+        const response= await axios.post('/api/pizzas/addpizza' , {pizza}, getAuthConfig(getState))
         console.log(response);
         dispatch({type:'ADD_PIZZA_SUCCESS'})
     } catch (error) {
@@ -61,10 +63,10 @@ export const addPizza=(pizza)=>async dispatch=>{
     }
 }
 
-export const editPizza=(editedpizza)=>async dispatch=>{
+export const editPizza=(editedpizza)=>async (dispatch, getState)=>{
     dispatch({type:'EDIT_PIZZA_REQUEST'})
     try {
-        const response= await axios.post('/api/pizzas/editpizza' , {editedpizza})
+        const response= await axios.post('/api/pizzas/editpizza' , {editedpizza}, getAuthConfig(getState))
         console.log(response);
         dispatch({type:'EDIT_PIZZA_SUCCESS'})
         window.location.href='/admin/pizzaslist'
@@ -73,10 +75,10 @@ export const editPizza=(editedpizza)=>async dispatch=>{
     }
 }
 
-export const deletePizza=(pizzaid)=>async dispatch=>{
+export const deletePizza=(pizzaid)=>async (dispatch, getState)=>{
 
 try {
-    const response =await axios.post('/api/pizzas/deletepizza' , {pizzaid})
+    const response =await axios.post('/api/pizzas/deletepizza' , {pizzaid}, getAuthConfig(getState))
     alert('Pizza Deleted Successfully')
     console.log(response);
     window.location.reload()

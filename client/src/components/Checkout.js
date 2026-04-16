@@ -9,6 +9,7 @@ export default function Checkout({subtotal}) {
 
     const orderstate = useSelector((state) => state.placeOrderReducer)
     const {loading , error , success} = orderstate
+    const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY
     const dispatch = useDispatch()
     function tokenHander(token)
     {
@@ -24,11 +25,14 @@ export default function Checkout({subtotal}) {
             {error && (<Error error='Something went wrong'/>)}
             {success && (<Success success='Your Order Placed Successfully'/>)}
 
+            {!stripeKey && (<Error error='Stripe publishable key is not configured'/>)}
+
+            {stripeKey && (
             <StripeCheckout
             amount={subtotal*100}
             shippingAddress
             token={tokenHander}
-            stripeKey='pk_test_51QNJLxJ7MmDUvRUvceR0gXzZ8dnYVMLDh40fZTduPCgz5eYM7bvwo3Ubl8BOiINxqhTHYIrMZg7Dax5ey8FU8GZe00In8pfDtS'
+            stripeKey={stripeKey}
             currency='INR'
             >
 
@@ -36,6 +40,7 @@ export default function Checkout({subtotal}) {
                   <button className='btn'>Pay Now</button>
 
             </StripeCheckout>
+            )}
             
         </div>
     )

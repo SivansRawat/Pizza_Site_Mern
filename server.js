@@ -6,6 +6,10 @@ const app = express();
 const db = require("./db.js");
 const path = require('path');
 
+if (!process.env.JWT_SECRET) {
+    console.warn("JWT_SECRET is not set. Use .env for local development and production secrets.");
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -40,4 +44,4 @@ if(process.env.NODE_ENV ==='production')
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => `Server running on port port 🔥`)
+app.listen(port, () => console.log(`Server running on port ${port}`))

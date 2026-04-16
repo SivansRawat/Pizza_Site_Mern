@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders } from "../actions/orderActions";
 import Error from "../components/Error";
-import Filter from "../components/Filter";
 import Loading from "../components/Loading";
 import {deleteUser, getAllUsers} from '../actions/userActions'
 export default function Userslist() {
@@ -13,7 +11,7 @@ export default function Userslist() {
 
         dispatch(getAllUsers())
         
-    }, [])
+    }, [dispatch])
     return (
         <div>
 

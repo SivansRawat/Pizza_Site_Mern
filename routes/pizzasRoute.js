@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Pizza = require('../models/pizzaModel')
+const { protect, admin } = require("../middleware/authMiddleware");
 
 router.get("/getallpizzas", async(req, res) => {
   
@@ -13,7 +14,7 @@ router.get("/getallpizzas", async(req, res) => {
 
 });
 
-router.post("/addpizza", async(req, res) => {
+router.post("/addpizza", protect, admin, async(req, res) => {
 
     const pizza = req.body.pizza
 
@@ -47,7 +48,7 @@ router.post("/getpizzabyid", async(req, res) => {
   
 });
 
-router.post("/editpizza", async(req, res) => {
+router.post("/editpizza", protect, admin, async(req, res) => {
 
     const editedpizza = req.body.editedpizza
 
@@ -70,7 +71,7 @@ router.post("/editpizza", async(req, res) => {
   
 });
 
-router.post("/deletepizza", async(req, res) => {
+router.post("/deletepizza", protect, admin, async(req, res) => {
 
     const pizzaid = req.body.pizzaid
 

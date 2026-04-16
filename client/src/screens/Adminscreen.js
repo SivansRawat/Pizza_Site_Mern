@@ -12,13 +12,15 @@ import Userslist from "./Userslist";
 export default function Adminscreen() {
   const userstate = useSelector((state) => state.loginUserReducer);
   const { currentUser } = userstate;
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    if (!currentUser.isAdmin) {
+    if (!currentUser || !currentUser.isAdmin) {
       window.location.href = "/";
     }
-  }, [currentUser.isAdmin]);
+  }, [currentUser]);
+
+  if (!currentUser || !currentUser.isAdmin) {
+    return null;
+  }
 
   return (
     <div>

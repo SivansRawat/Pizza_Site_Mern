@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deletePizza, getAllPizzas } from "../actions/pizzaActions";
 import Error from "../components/Error";
-import Filter from "../components/Filter";
 import Loading from "../components/Loading";
 export default function Pizzaslist() {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ export default function Pizzaslist() {
   const { pizzas, error, loading } = pizzasstate;
   useEffect(() => {
     dispatch(getAllPizzas());
-  }, []);
+  }, [dispatch]);
   return <div>
     <h2>Pizzas List</h2>
     {loading && (<Loading/>)}

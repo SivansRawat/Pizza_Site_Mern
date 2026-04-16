@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {useDispatch , useSelector} from 'react-redux'
 import { registerUser } from "../actions/userActions";
 import Error from "../components/Error";
@@ -14,7 +14,7 @@ export default function Registerscreen() {
   const dispatch = useDispatch()
   function register(){
 
-      if(password != cpassword)
+      if(password !== cpassword)
       {
           alert("passwords not matched")
       }
@@ -46,7 +46,7 @@ export default function Registerscreen() {
             <input required type="text" placeholder="name" className="form-control" value={name} onChange={(e)=>{setname(e.target.value)}} />
             <input required type="text" placeholder="email" className="form-control" value={email} onChange={(e)=>{setemail(e.target.value)}} />
             <input
-              type="text"
+              type="password"
               placeholder="password"
               className="form-control"
               value={password}
@@ -54,7 +54,7 @@ export default function Registerscreen() {
               onChange={(e)=>{setpassword(e.target.value)}}
             />
             <input
-              type="text"
+              type="password"
               placeholder="confirm password"
               className="form-control"
               value={cpassword}

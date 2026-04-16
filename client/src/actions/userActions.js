@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { getAuthConfig } from "../utils/authConfig";
+
 export const registerUser=(user)=>async dispatch=>{
 
     dispatch({type:'USER_REGISTER_REQUEST'})
@@ -37,12 +39,12 @@ export const logoutUser=()=>dispatch=>{
 
 }
 
-export const getAllUsers=()=>async dispatch=>{
+export const getAllUsers=()=>async (dispatch, getState)=>{
 
     dispatch({type:'GET_USERS_REQUEST'})
 
     try {
-        const response = await axios.get('/api/users/getallusers')
+        const response = await axios.get('/api/users/getallusers', getAuthConfig(getState))
         console.log(response);
         dispatch({type:'GET_USERS_SUCCESS' , payload : response.data})
        
@@ -52,10 +54,10 @@ export const getAllUsers=()=>async dispatch=>{
 
 }
 
-export const deleteUser=(userid)=>async dispatch=>{
+export const deleteUser=(userid)=>async (dispatch, getState)=>{
 
     try {
-        await axios.post('/api/users/deleteuser', {userid})
+        await axios.post('/api/users/deleteuser', {userid}, getAuthConfig(getState))
         alert('User deleted successfully')
         window.location.reload()
     } catch (error) {
