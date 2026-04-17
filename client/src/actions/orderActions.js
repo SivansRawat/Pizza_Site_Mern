@@ -9,7 +9,12 @@ export const placeOrder=(token , subtotal)=>async (dispatch , getState)=>{
       
       try {
 
-         const response = await axios.post('/api/orders/placeorder' , {token , subtotal , cartItems}, getAuthConfig(getState))
+        //  const response = await axios.post('/api/orders/placeorder' , {token , subtotal , cartItems}, getAuthConfig(getState))
+        const response = await axios.post(
+  'https://pizza-site-mern.onrender.com/api/orders/placeorder',
+  { token, subtotal, cartItems },
+  getAuthConfig(getState)
+);
          dispatch({type:'PLACE_ORDER_SUCCESS'})
          console.log(response);
           
@@ -51,7 +56,8 @@ export const getUserOrders = () => async (dispatch, getState) => {
 
   try {
     const response = await axios.post(
-      '/api/orders/getuserorders',
+      // '/api/orders/getuserorders',
+      'https://pizza-site-mern.onrender.com/api/orders/getuserorders',
       { userid: currentUser._id },
       getAuthConfig(getState)
     );
@@ -77,7 +83,8 @@ export const getAllOrders=()=>async (dispatch,getState)=>{
   dispatch({type:'GET_ALLORDERS_REQUEST'})
   
   try {
-      const response = await axios.get('/api/orders/getallorders', getAuthConfig(getState))
+      // const response = await axios.get('/api/orders/getallorders', getAuthConfig(getState))
+      const response = await axios.get('https://pizza-site-mern.onrender.com/api/orders/getallorders', getAuthConfig(getState))
 
       
       console.log(response);
@@ -94,10 +101,16 @@ export const deliverOrder=(orderid)=>async (dispatch, getState)=>{
 
 
     try {
-      const response = await axios.post('/api/orders/deliverorder' , {orderid}, getAuthConfig(getState))
+      // const response = await axios.post('/api/orders/deliverorder' , {orderid}, getAuthConfig(getState))
+      const response = await axios.post(
+  'https://pizza-site-mern.onrender.com/api/orders/deliverorder',
+  { orderid },
+  getAuthConfig(getState)
+);
       console.log(response);
       alert('Order Delivered')
-      const orders = await axios.get('/api/orders/getallorders', getAuthConfig(getState))
+      // const orders = await axios.get('/api/orders/getallorders', getAuthConfig(getState))
+      const orders = await axios.get('https://pizza-site-mern.onrender.com/api/orders/getallorders', getAuthConfig(getState))
       dispatch({type:'GET_ALLORDERS_SUCCESS' , payload:orders.data})
     } catch (error) {
       console.log(error);

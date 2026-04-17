@@ -6,7 +6,8 @@ export const registerUser=(user)=>async dispatch=>{
     dispatch({type:'USER_REGISTER_REQUEST'})
 
     try {
-        const response = await axios.post('/api/users/register' , user)
+        // const response = await axios.post('/api/users/register' , user)
+        const response = await axios.post('https://pizza-site-mern.onrender.com/api/users/register' , user)
         console.log(response);
         dispatch({type:'USER_REGISTER_SUCCESS'})
     } catch (error) {
@@ -20,7 +21,8 @@ export const loginUser=(user)=>async dispatch=>{
     dispatch({type:'USER_LOGIN_REQUEST'})
 
     try {
-        const response = await axios.post('/api/users/login' , user)
+        // const response = await axios.post('/api/users/login' , user)
+        const response = await axios.post('https://pizza-site-mern.onrender.com/api/users/login' , user)
         console.log(response);
         dispatch({type:'USER_LOGIN_SUCCESS' , payload: response.data})
         localStorage.setItem('currentUser' , JSON.stringify(response.data))
@@ -44,7 +46,9 @@ export const getAllUsers=()=>async (dispatch, getState)=>{
     dispatch({type:'GET_USERS_REQUEST'})
 
     try {
-        const response = await axios.get('/api/users/getallusers', getAuthConfig(getState))
+        // const response = await axios.get('/api/users/getallusers', getAuthConfig(getState))
+        const response = await axios.get('https://pizza-site-mern.onrender.com/api/users/getallusers', getAuthConfig(getState))
+
         console.log(response);
         dispatch({type:'GET_USERS_SUCCESS' , payload : response.data})
        
@@ -57,7 +61,8 @@ export const getAllUsers=()=>async (dispatch, getState)=>{
 export const deleteUser=(userid)=>async (dispatch, getState)=>{
 
     try {
-        await axios.post('/api/users/deleteuser', {userid}, getAuthConfig(getState))
+        // await axios.post('/api/users/deleteuser', {userid}, getAuthConfig(getState))
+        await axios.post('https://pizza-site-mern.onrender.com/api/users/deleteuser', {userid}, getAuthConfig(getState))
         alert('User deleted successfully')
         window.location.reload()
     } catch (error) {
