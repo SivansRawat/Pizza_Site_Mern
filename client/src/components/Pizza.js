@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {useDispatch} from 'react-redux'
 import { addToCart } from "../actions/cartActions";
@@ -7,9 +7,9 @@ import 'aos/dist/aos.css';
 export default function Pizza({ pizza }) {
 
   
-    AOS.init({
-    
-    })
+  useEffect(() => {
+    AOS.init({ once: true, duration: 650 });
+  }, []);
  
 
   const [quantity, setquantity] = useState(1);
@@ -28,21 +28,25 @@ export default function Pizza({ pizza }) {
   return (
     <div
      data-aos='zoom-in'
-      className="shadow-lg p-3 mb-5 bg-white rounded"
+      className="pizza-card shadow-lg p-3 mb-5 bg-white rounded"
       key={pizza._id}
     >
-      <div onClick={handleShow}>
-        <h1>{pizza.name}</h1>
+      <div className="pizza-media" onClick={handleShow}>
         <img
           src={pizza.image}
           alt={pizza.name}
           className="img-fluid"
-          style={{ height: "200px" }}
         />
+        <span className={`pizza-badge ${pizza.category === "veg" ? "veg-badge" : "nonveg-badge"}`}>
+          {pizza.category}
+        </span>
       </div>
 
-      <div className="flex-container">
-        <div className="w-100 m-1">
+      <div className="pizza-body">
+        <h1 className="pizza-title">{pizza.name}</h1>
+
+      <div className="pizza-controls flex-container">
+        <div>
           <p>Varients</p>
           <select
             className="form-control"
@@ -52,12 +56,12 @@ export default function Pizza({ pizza }) {
             }}
           >
             {pizza.varients.map((varient) => {
-              return <option value={varient}>{varient}</option>;
+              return <option value={varient} key={varient}>{varient}</option>;
             })}
           </select>
         </div>
 
-        <div className="w-100 m-1">
+        <div>
           <p>Quantity</p>
           <select
             className="form-control"
@@ -67,21 +71,24 @@ export default function Pizza({ pizza }) {
             }}
           >
             {[...Array(10).keys()].map((x, i) => {
-              return <option value={i + 1}>{i + 1}</option>;
+              return <option value={i + 1} key={i + 1}>{i + 1}</option>;
             })}
           </select>
         </div>
       </div>
 
-      <div className="flex-container">
-        <div className="m-1 w-100">
-          <h1 className="mt-1">
-            Price : {pizza.prices[0][varient] * quantity} Rs/-
+      <div className="pizza-footer flex-container">
+        <div>
+          <h1 className="pizza-price">
+            Rs {pizza.prices[0][varient] * quantity}
           </h1>
         </div>
-        <div className="m-1 w-100">
-          <button className="btn" onClick={addtocart}>ADD TO CART</button>
+        <div>
+          <button className="btn" onClick={addtocart}>
+            <i className="fas fa-cart-plus mr-2"></i>ADD
+          </button>
         </div>
+      </div>
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -90,7 +97,7 @@ export default function Pizza({ pizza }) {
         </Modal.Header>
 
         <Modal.Body>
-          <img src={pizza.image} alt={pizza.name} className="img-fluid" style={{height:'400px'}}/>
+          <img src={pizza.image} alt={pizza.name} className="img-fluid"/>
           <p>{pizza.description}</p>
         </Modal.Body>
 

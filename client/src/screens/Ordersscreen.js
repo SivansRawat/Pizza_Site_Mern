@@ -19,26 +19,28 @@ export default function Ordersscreen() {
     }, [dispatch])
 
     return (
-        <div>
-            <h2 style={{fontSize:'35px'}}>My Orders</h2>
-            <hr/>
+        <div className="orders-page">
+            <div className="section-heading">
+                <h2>My Orders</h2>
+                <p>Track your past pizza nights and delivery details.</p>
+            </div>
             <div className="row justify-content-center">
                 {loading && (<Loading/>)}
                 {error && (<Error error='Something went wrong'/>)}
                 {orders && orders.map(order=>{
-                    return <div className="col-md-8 m-2 p-1" data-aos='fade-down'  style={{backgroundColor:'red' , color:'white'}}>
+                    return <div className="col-md-10 order-card m-2 p-1" data-aos='fade-down' key={order._id}>
 
-                            <div className="flex-container">
-                                <div className='text-left w-100 m-1'>
+                            <div className="order-columns flex-container">
+                                <div>
                                     <h2 style={{fontSize:'25px'}}>Items</h2>
                                     <hr/>
                                     {order.orderItems.map(item=>{
-                                        return <div>
+                                        return <div key={item._id || item.name}>
                                             <p>{item.name} [{item.varient}] * {item.quantity} = {item.price}</p>
                                         </div>
                                     })}
                                 </div>
-                                <div className='text-left w-100 m-1'>
+                                <div>
                                    
                                 <h2 style={{fontSize:'25px'}}>Address</h2>
                                 <hr/>
@@ -47,7 +49,7 @@ export default function Ordersscreen() {
                                 <p>Country : {order.shippingAddress.country}</p>
                                 <p>Pincode : {order.shippingAddress.pincode}</p>
                                 </div>
-                                <div className='text-left w-100 m-1'>
+                                <div>
                                 <h2 style={{fontSize:'25px'}}>Order Info</h2>
                                 <hr/>
                                 <p>Order Amount : {order.orderAmount}</p>

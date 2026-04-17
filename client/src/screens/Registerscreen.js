@@ -33,7 +33,7 @@ export default function Registerscreen() {
   return (
     <div className='register'>
       <div className="row justify-content-center mt-5">
-        <div className="col-md-5 mt-5 text-left shadow-lg p-3 mb-5 bg-white rounded">
+        <div className="col-md-5 mt-5 text-left auth-card shadow-lg p-3 mb-5 bg-white rounded">
 
           {loading && (<Loading/>)}
           {success && (<Success success='User Registered Successfully' />)}
@@ -61,9 +61,9 @@ export default function Registerscreen() {
               required
               onChange={(e)=>{setcpassword(e.target.value)}}
             />
-            <button onClick={register} className="btn mt-3 mb-3">REGISTER</button>
+            <button onClick={register} className="btn mt-3 mb-3 w-100">REGISTER</button>
             <br/>
-            <a style={{color:'black'}} href="/login">Click Here To Login</a>
+            <a href="/login" className="auth-link">Click Here To Login</a>
           </div>
         </div>
       </div>
